@@ -43,7 +43,12 @@ module SpentTimeRequired
                         update_issue_from_params
                         render(:action => 'edit') and return
                     end
-
+                    if (@check and params[:time_entry][:hours].to_f < 0.02 )
+                        flash[:error] = "Spent time should not be less than 0.02"
+                        find_issue
+                        update_issue_from_params
+                        render(:action => 'edit') and return
+                    end
                     update_without_check_spent_time
                 end
             end
